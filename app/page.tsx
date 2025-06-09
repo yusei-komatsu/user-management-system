@@ -1,9 +1,9 @@
-import React from 'react';
-import { Typography, Box } from '@mui/material';
+import { Box, Typography } from "@mui/material";
+import React from "react";
 
 const HomePage: React.FC = () => {
   return (
-    <Box sx={{ textAlign: 'center', mt: 8 }}>
+    <Box sx={{ textAlign: "center", mt: 8 }}>
       <Typography variant="h3" gutterBottom>
         ユーザー管理システムへようこそ
       </Typography>
@@ -12,6 +12,6 @@ const HomePage: React.FC = () => {
       </Typography>
     </Box>
   );
-}
+};
 
 export default HomePage;

@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import Link from "next/link";
+import React from "react";
 
 const Navbar: React.FC = () => {
   return (
@@ -18,6 +18,6 @@ const Navbar: React.FC = () => {
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 export default Navbar;

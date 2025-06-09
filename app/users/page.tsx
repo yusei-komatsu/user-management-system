@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { fetchUsers } from '../../utils/api';
-import { User } from '../../types/User';
-import UserCard from '../../components/UserCard';
-import { Typography, CircularProgress, Alert, Box } from '@mui/material';
+import { Alert, Box, CircularProgress, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import UserCard from "../../components/UserCard";
+import { User } from "../../types/User";
+import { fetchUsers } from "../../utils/api";
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -18,7 +18,7 @@ const UsersPage: React.FC = () => {
         console.log(data);
         setUsers(data);
       } catch (err) {
-        setError('ユーザーの取得に失敗しました。' + err);
+        setError("ユーザーの取得に失敗しました。" + err);
       } finally {
         setLoading(false);
       }
@@ -40,11 +40,11 @@ const UsersPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         ユーザー一覧
       </Typography>
-      {users.map(user => (
+      {users.map((user) => (
         <UserCard key={user.id} user={user} />
       ))}
     </Box>
   );
-}
+};
 
 export default UsersPage;

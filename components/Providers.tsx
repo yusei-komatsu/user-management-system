@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import theme from '../styles/theme';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import React from "react";
+import theme from "../styles/theme";
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -11,6 +11,6 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {children}
     </ThemeProvider>
   );
-}
+};
 
 export default Providers;

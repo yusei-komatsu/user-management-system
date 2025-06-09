@@ -1,5 +1,5 @@
-import { supabase } from './supabaseClient';
 import { User } from '../types/User';
+import { supabase } from './supabaseClient';
 
 export const fetchUsers = async (): Promise<User[]> => {
   const { data, error } = await supabase
@@ -14,7 +14,7 @@ export const fetchUsers = async (): Promise<User[]> => {
 
 export const fetchUserById = async (id: number): Promise<User | null> => {
   const { data, error } = await supabase
-    .from<'dev_users', User>('dev_users')
+    .from('dev_users')
     .select('*')
     .eq('id', id)
     .single();
