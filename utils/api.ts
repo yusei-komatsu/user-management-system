@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient';
 
 export const fetchUsers = async (): Promise<User[]> => {
   const { data, error } = await supabase
-    .from<'dev_users', User>('dev_users') // テーブル名と型を2つ指定
+    .from('dev_users')
     .select('*');
 
   if (error) {
