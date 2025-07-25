@@ -61,7 +61,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
           {...register("email")}
         />
         <TextField
-          select
           fullWidth
           label="ロール"
           {...register("role")}
