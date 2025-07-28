@@ -9,13 +9,9 @@ import {
   Button,
   Box,
   Typography,
-  Alert,
-  CircularProgress,
 } from "@mui/material";
 import { fetchUserById, updateUser } from "../utils/api";
 import { User } from "../types/User";
-import { useRouter } from "next/navigation";
-import { error } from "console";
 
 // 必要に応じて利用する
 // EditUserFormPropsインターフェースの定義（タスク2-1-2）
@@ -35,7 +31,6 @@ interface EditUserFormProps {
 // TODO: ユーザー編集フォームコンポーネントを実装する
 // Reactフックフォームの初期化
 const EditUserForm: React.FC<EditUserFormProps> = ({ userId, onSuccess, onError }) => {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const {
     register,
@@ -70,7 +65,6 @@ const onSubmit: SubmitHandler<EditUserFormInputs> = async (data: EditUserFormInp
   try {
     await updateUser( userId, data );
     if (onSuccess) onSuccess();
-    router.push("/users");
   } catch (error) {
     if (onError) onError(error);
     setError("更新できませんでした")
