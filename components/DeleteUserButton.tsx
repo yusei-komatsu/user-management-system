@@ -19,7 +19,6 @@ const DeleteUserButton: React.FC<DeleteUserButtonProps> = ({ userId, onDelete })
         await deleteUser(userId);
         onDelete(userId);
       } catch (error) {
-        console.error("削除エラー詳細:", error);
         alert("削除できませんでした" + error)
       }
     }
