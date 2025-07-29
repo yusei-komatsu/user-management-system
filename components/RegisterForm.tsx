@@ -21,6 +21,7 @@ interface RegisterFormProps {
 // TODO: 新規登録フォームコンポーネントを実装する
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
   // 必要に応じて利用する
+  const allowedRoles = ["admin", "member"];
   const {
     register,
     handleSubmit,
@@ -28,17 +29,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
   } = useForm<RegisterFormInputs>();
 
   // 1-1-4.　新規登録処理の実装（タスク1-1-4）
-  const onSubmit: SubmitHandler<RegisterFormInputs> = async (data: RegisterFormInputs) => {
+  const onSubmit: SubmitHandler<RegisterFormInputs> = async (
+    data: RegisterFormInputs
+  ) => {
     try {
-      await createUser(data)
+      await createUser(data);
       console.log("登録情報:", data);
 
       if (onSuccess) onSuccess();
-      console.log("登録に成功しました")
+      console.log("登録に成功しました");
     } catch (error) {
       if (onError) onError(error);
-      console.log("登録に失敗しました")
-    }  
+      console.log("登録に失敗しました");
+    }
   };
 
   // 登録用フォームの実装（タスク1-1-5）
@@ -52,20 +55,51 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
           fullWidth
           label="名前"
           margin="normal"
-          {...register("name")}
+          {...register("name", {
+            required: { value: true, message: "名前は入力必須です。" },
+            maxLength: {
+              value: 10,
+              message: "名前は10文字以内で入力してください。",
+            },
+            pattern: {
+              value:
+                /^[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}\p{Script=Latin}0-9\s]+$/u,
+              message: "絵文字や記号は使用できません",
+            },
+          })}
+          error={!!errors.name}
+          helperText={errors.name?.message}
         />
         <TextField
           fullWidth
           label="メール"
           margin="normal"
-          {...register("email")}
+          {...register("email", {
+            required: {
+              value: true,
+              message: "メールアドレスは入力必須です。",
+            },
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "無効なメールアドレスの形式です。",
+            },
+          })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
         />
         <TextField
           fullWidth
           label="ロール"
-          {...register("role")}
+          {...register("role", {
+            required: { value: true, message: "役割は入力必須です。" },
+            validate: (value) =>
+              allowedRoles.includes(value) ||
+              "adminかmemberを入力してください。",
+          })}
+          error={!!errors.role}
+          helperText={errors.role?.message}
         />
-        <Button type="submit" variant="contained" fullWidth sx={{ mt:2 }}>
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
           登録
         </Button>
       </form>
