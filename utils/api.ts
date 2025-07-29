@@ -4,7 +4,8 @@ import { supabase } from './supabaseClient';
 export const fetchUsers = async (): Promise<User[]> => {
   const { data, error } = await supabase
     .from('dev_users')
-    .select('*');
+    .select('*')
+    .eq('deleted', false); // 削除済みユーザーを除外（タスク2-1-1-2）
 
   if (error) {
     throw error;
@@ -61,7 +62,7 @@ export const updateUser = async (id: number, user: Partial<User>): Promise<User>
 export const deleteUser = async (id: number): Promise<void> => {
   const { error } = await supabase
     .from('dev_users')
-    .delete()
+    .update({ deleted: true }) // 論理削除に修正（2-1-1-1）
     .eq('id', id);
 
   if (error) {
