@@ -18,7 +18,6 @@ interface UserCardProps {
 }
 
 // もともとの削除ボタンをDeleteUserButtonに置き換える（タスク2-3-2.c）
-// 該当ユーザーのidをもとに詳細画面に遷移するボタンを設置（タスク3-3-4.b）
 const UserCard: React.FC<UserCardProps> = ({ user, onDelete }) => {
 
   return (
@@ -31,9 +30,6 @@ const UserCard: React.FC<UserCardProps> = ({ user, onDelete }) => {
         <Typography variant="body2">役割: {user.role}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" component={Link} href={`/users/${user.id}/details`}>
-          詳細
-        </Button>
         <Button size="small" component={Link} href={`/users/${user.id}/edit`}>
           編集
         </Button>

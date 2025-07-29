@@ -14,6 +14,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({ user }) => {
       <CardContent>
         {/* 表示内容の構成（タスク3-1-4） */}
         {/* MUIを利用したレイアウトの調整（タスク3-1-5） */}
+        <Typography variant="h5" gutterBottom>
+          ユーザー詳細
+        </Typography>
         <Typography>ID:{user.id}</Typography>
         <Typography>名前:{user.name}</Typography>
         <Typography>メール:{user.email}</Typography>
