@@ -19,13 +19,14 @@ const DeleteUserButton: React.FC<DeleteUserButtonProps> = ({ userId, onDelete })
         await deleteUser(userId);
         onDelete(userId);
       } catch (error) {
+        console.error("削除エラー詳細:", error);
         alert("削除できませんでした" + error)
       }
     }
   };
 
   return (
-    <Button variant="outlined" color="error" onClick={handleDelete}>
+    <Button color="error" onClick={handleDelete}>
       削除
     </Button>
   )
