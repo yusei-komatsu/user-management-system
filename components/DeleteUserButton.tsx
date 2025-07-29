@@ -25,7 +25,7 @@ const DeleteUserButton: React.FC<DeleteUserButtonProps> = ({ userId, onDelete })
   };
 
   return (
-    <Button variant="outlined" color="error" onClick={handleDelete}>
+    <Button color="error" onClick={handleDelete}>
       削除
     </Button>
   )
