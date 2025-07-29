@@ -2,15 +2,17 @@
 
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import UserCard from "../../components/UserCard";
 import { User } from "../../types/User";
 import { fetchUsers } from "../../utils/api";
+// UserListコンポーネントのインポート（タスク1-3-1）
+import UserList from "../../components/UserList"
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // fetchUsersによるデータ取得処理であることを確認（タスク1-3-2）
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -40,9 +42,8 @@ const UsersPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         ユーザー一覧
       </Typography>
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+      {/* UserListで一覧を表示するように修正（タスクリスト1-3-3） */}
+      <UserList users={users} />
     </Box>
   );
 };
