@@ -24,7 +24,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
         <Typography variant="h6" component="div" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: "pre-line" }}>
           {description}
         </Typography>
       </CardContent>
