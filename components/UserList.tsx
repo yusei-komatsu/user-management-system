@@ -4,6 +4,7 @@ import CustomCard from "./parts/CustomCard";
 import CustomButton from "./parts/CustomButton";
 import Link from "next/link";
 import { deleteUser } from "@/utils/api";
+import CustomModal from "./parts/CustomModal";
 
 // UserListPropsインターフェースを定義（タスク1-1-2）
 interface UserListProps {
@@ -14,16 +15,16 @@ interface UserListProps {
 const UserList: React.FC<UserListProps> = ({ users }) => {
   // useStateで表示するユーザー情報をstate管理する（タスク2-3-3.a）
   const [visibleUsers, setVisibleUsers] = useState<User[]>(users);
+  const [open, setOpen] = useState(false);
+  const [targetUserId, setTargetUserId] = useState<number | null>(null);
   const handleDelete = async (userId: number) => {
-    if (confirm("本当にこのユーザーを削除しますか？")) {
-      try {
-        await deleteUser(userId);
-        setVisibleUsers((preview) =>
-          preview.filter((user) => user.id !== userId)
-        );
-      } catch (error) {
-        alert("削除できませんでした: " + error);
-      }
+    try {
+      await deleteUser(userId);
+      setVisibleUsers((preview) =>
+        preview.filter((user) => user.id !== userId)
+      );
+    } catch (error) {
+      alert("削除できませんでした: " + error);
     }
   };
 
@@ -56,10 +57,28 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               </CustomButton>
               <CustomButton
                 variantType="danger"
-                onClick={() => handleDelete(user.id)}
+                onClick={() => {
+                  setTargetUserId(user.id);
+                  setOpen(true);}}
               >
                 削除
               </CustomButton>
+
+              {targetUserId !== null && (
+                <CustomModal
+                  title="削除の確認"
+                  content="本当に削除しますか？"
+                  open={open}
+                  onClose={() => {
+                    setOpen(false);
+                    setTargetUserId(null);
+                  }}
+                  onConfirm={() => {
+                    if (targetUserId !== null) handleDelete(targetUserId);
+                    setOpen(false);
+                  }}
+                />
+              )}
             </>
           }
         />
