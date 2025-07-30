@@ -31,7 +31,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   return (
     // TODO: <Button>の実装
     // プロップスには[color][variant]を設定し、{...props}を最後に設定する
-    <Button color={color} variant="contained" {...props} />
+    <Button color={color} {...props} />
   );
 };
 
