@@ -9,7 +9,8 @@ import {
 import Link from "next/link";
 import React from "react";
 import { User } from "../types/User";
-import DeleteUserButton from "./DeleteUserButton";
+import CustomButton from "./parts/CustomButton";
+import { deleteUser } from "@/utils/api";
 
 // UserCardコンポーネントのPropsにonDeleteを追加する（タスク2-3-2.b）
 interface UserCardProps {
@@ -20,6 +21,16 @@ interface UserCardProps {
 // もともとの削除ボタンをDeleteUserButtonに置き換える（タスク2-3-2.c）
 // 該当ユーザーのidをもとに詳細画面に遷移するボタンを設置（タスク3-3-4.b）
 const UserCard: React.FC<UserCardProps> = ({ user, onDelete }) => {
+  const handleDelete = async () => {
+    if (confirm("本当にこのユーザーを削除しますか？")) {
+      try {
+        await deleteUser(user.id);
+        onDelete(user.id);
+      } catch (error) {
+        alert("削除できませんでした: " + error);
+      }
+    }
+  };
 
   return (
     <Card sx={{ minWidth: 275, mb: 2 }}>
@@ -37,7 +48,9 @@ const UserCard: React.FC<UserCardProps> = ({ user, onDelete }) => {
         <Button size="small" component={Link} href={`/users/${user.id}/edit`}>
           編集
         </Button>
-        <DeleteUserButton userId={user.id} onDelete={onDelete} />
+        <CustomButton variantType="danger" onClick={handleDelete}>
+          削除
+        </CustomButton>
       </CardActions>
     </Card>
   );
