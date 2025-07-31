@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Box, Chip } from "@mui/material";
 
 // TODO: メタデータ
-const meta:  Meta<typeof CustomCard> = {
+const meta: Meta<typeof CustomCard> = {
   title: "Components/Parts/CustomCard",
   component: CustomCard,
   tags: ["autodocs"],
@@ -58,8 +58,12 @@ export const CardWithImage = {
       <img
         src="https://source.unsplash.com/random/400x20"
         alt="カードの画像"
-        style={{ width: "100%", borderRadius: "8px 8px 0 0", objectFit: "cover" }}
-      />  
+        style={{
+          width: "100%",
+          borderRadius: "8px 8px 0 0",
+          objectFit: "cover",
+        }}
+      />
     ),
   },
 };
