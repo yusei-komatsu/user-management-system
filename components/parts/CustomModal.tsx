@@ -1,7 +1,7 @@
 // components/parts/CustomModal.tsx
 
-import React from "react";
-import { Modal, Box, Typography, Button } from "@mui/material";
+import React, { useEffect } from "react";
+import { Modal, Box, Typography, Button, Slide } from "@mui/material";
 
 interface CustomModalProps {
   open: boolean; // モーダルが開かれたか
@@ -9,6 +9,8 @@ interface CustomModalProps {
   content: string;
   onClose: () => void;
   onConfirm?: () => void;
+  slideDirection?: "left" | "right" | "up" | "down";
+  autoCloseDelay?: number;
 }
 
 const style = {
@@ -24,25 +26,51 @@ const style = {
 };
 
 // TODO: propsの設定
-const CustomModal: React.FC<CustomModalProps> = ({ open, title, content, onClose, onConfirm }) => {
+const CustomModal: React.FC<CustomModalProps> = ({
+  open,
+  title,
+  content,
+  onClose,
+  onConfirm,
+  slideDirection = undefined,
+  autoCloseDelay = undefined,
+}) => {
+  useEffect(() => {
+    if (open && autoCloseDelay) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, autoCloseDelay);
+      return () => clearTimeout(timer);
+    }
+  }, [open, autoCloseDelay, onClose]);
+  const modalContent = (
+    <Box sx={style}>
+      <Typography variant="h6" component="h2" gutterBottom>
+        {title}
+      </Typography>
+      <Typography sx={{ mt: 2 }}>{content}</Typography>
+      <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
+        <Button onClick={onClose} sx={{ mr: 2 }}>
+          キャンセル
+        </Button>
+        {onConfirm && (
+          <Button variant="contained" color="primary" onClick={onConfirm}>
+            確認
+          </Button>
+        )}
+      </Box>
+    </Box>
+  );
+
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={style}>
-        <Typography variant="h6" component="h2" gutterBottom>
-          {title}
-        </Typography>
-        <Typography sx={{ mt: 2 }}>{content}</Typography>
-        <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
-          <Button onClick={onClose} sx={{ mr: 2 }}>
-            キャンセル
-          </Button>
-          {onConfirm && (
-            <Button variant="contained" color="primary" onClick={onConfirm}>
-              確認
-            </Button>
-          )}
-        </Box>
-      </Box>
+      {slideDirection ? (
+        <Slide direction={slideDirection} in={open} mountOnEnter unmountOnExit>
+          {modalContent}
+        </Slide>
+      ) : (
+        modalContent
+      )}
     </Modal>
   );
 };

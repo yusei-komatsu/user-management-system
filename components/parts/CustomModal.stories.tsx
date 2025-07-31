@@ -1,6 +1,6 @@
 // components/parts/CustomModal.stories.tsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import CustomModal from "../../components/parts/CustomModal";
 import CustomButton from "../../components/parts/CustomButton";
@@ -60,11 +60,8 @@ export const SlideInModal: Story = {
           title="スライドイン確認"
           content="下からスライドインします"
           open={open}
-          onClose={() => {
-            alert("操作を確認しました");
-            setOpen(false);
-          }}
-          slide={true}
+          onClose={() => setOpen(false)}
+          slideDirection="up"
         />
       </Box>
     );
@@ -73,12 +70,12 @@ export const SlideInModal: Story = {
 
 export const SlideOutModal: Story = {
   render: () => {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
 
     return (
       <>
         <CustomButton variantType="primary" onClick={() => setOpen(false)}>
-          モーダルを再表示
+          スライドアウトモーダル
         </CustomButton>
 
         <CustomModal
@@ -86,6 +83,7 @@ export const SlideOutModal: Story = {
           title="スライドアウト確認"
           content="このモーダルは閉じるときにスライドアウトします"
           onClose={() => setOpen(false)}
+          slideDirection="up"
         />
       </>
     );
@@ -94,23 +92,22 @@ export const SlideOutModal: Story = {
 
 export const ModalWithTimerClose: Story = {
   render: () => {
-    const [open, setOpen] = React.useState(true);
-
-    React.useEffect(() => {
-      const timer = setTimeout(() => {
-        setOpen(false);
-      }, 10000);
-
-      return () => clearTimeout(timer);
-    }, []);
+    const [open, setOpen] = useState(true);
 
     return (
-      <CustomModal
-        open={open}
-        title="自動で閉じるモーダル"
-        content="このモーダルは10秒後に自動で閉じます"
-        onClose={() => setOpen(false)}
-      />
+      <>
+        <CustomButton variantType="primary" onClick={() => setOpen(false)}>
+          10秒後に閉じるモーダルを開く
+        </CustomButton>
+
+        <CustomModal
+          open={open}
+          title="自動で閉じるモーダル"
+          content="このモーダルは10秒後に自動で閉じます"
+          onClose={() => setOpen(false)}
+          autoCloseDelay={10000}
+        />
+      </>
     );
   },
 };
