@@ -47,3 +47,70 @@ export const Default: Story = {
     );
   },
 };
+
+export const SlideInModal: Story = {
+  render: () => {
+    const[open, setOpen] = useState(false);
+    return (
+      <Box>
+        <CustomButton variantType="primary" onClick={() => setOpen(true)}>
+          スライドインモーダルを開く
+        </CustomButton>
+        <CustomModal
+          title="スライドイン確認"
+          content="下からスライドインします"
+          open={open}
+          onClose={() => {
+            alert("操作を確認しました");
+            setOpen(false);
+          }}
+          slide={true}
+        />
+      </Box>
+    );
+  },
+};
+
+export const SlideOutModal: Story = {
+  render: () => {
+    const [open, setOpen] = React.useState(true);
+
+    return (
+      <>
+        <CustomButton variantType="primary" onClick={() => setOpen(false)}>
+          モーダルを再表示
+        </CustomButton>
+
+        <CustomModal
+          open={open}
+          title="スライドアウト確認"
+          content="このモーダルは閉じるときにスライドアウトします"
+          onClose={() => setOpen(false)}
+        />
+      </>
+    );
+  },
+};
+
+export const ModalWithTimerClose: Story = {
+  render: () => {
+    const [open, setOpen] = React.useState(true);
+
+    React.useEffect(() => {
+      const timer = setTimeout(() => {
+        setOpen(false);
+      }, 10000);
+
+      return () => clearTimeout(timer);
+    }, []);
+
+    return (
+      <CustomModal
+        open={open}
+        title="自動で閉じるモーダル"
+        content="このモーダルは10秒後に自動で閉じます"
+        onClose={() => setOpen(false)}
+      />
+    );
+  },
+};
